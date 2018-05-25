@@ -8,6 +8,29 @@ It uses the pytuya library (https://github.com/clach04/python-tuya) to directly 
 
 See here for how to find localKey and devId: http://seandev.org/tuyainst
 
+## Finding localKey and devId
+
+localKey can be found by sniffing the communications between the switch or bulb and the Tuya HTTP servers. To do this, you will need to have access to a device through which this traffic will pass. 
+
+### Using ngrep
+
+ngrep is the most convenient tool for this
+
+ngrep -d any "localKey" port 80
+
+### Using tcpdump
+
+There is no easy way to grep the contents of tcpdump captures, however they can be viewed and searched within Wireshark.
+
+tcpdump -s 0 -w output.pcap
+
+### Using Wireshark
+
+* Apply the filter tcp.port == 80 to capture all HTTP traffic. If you know the IP address of the bulb, add && ip.src == xx.xx.xx.xx to further filter the traffic.
+* Look for the localKey value in the body of the HTTP communications.
+
+## Installing HomeAssistant Components
+
 To use, copy the files to HASS custom component directory as below:
    * cp switch/tuya.py <hass config dir>/custom_components/switch/
    * cp light/tuya.py <hass config dir>/custom_components/light/
