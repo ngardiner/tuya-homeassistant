@@ -1,18 +1,27 @@
 # tuya-homeassistant
 
-**THIS WILL ONLY WORK FOR SWITCHES. WILL NOT WORK WITH DIMMERS.**
+This is a beta fork of the tuya-homeassistant HASS component, with switch and bulb support merged in, and with recent switch development merged into the component.
 
-This is a simple platform to control **SOME** switch devices that use the Tuya cloud for control.
+This is a simple platform to control **SOME** switch devices that use the Tuya cloud for control. Tuya devices are low-cost automation devices for power socket switching and LED lighting based on the ESP chipset.
 
-It uses the pytuya library (https://github.com/clach04/python-tuya) to directly control the switch device. (No need to install as Home Assistant automatically installs it.)
-
-Most switch devices that use the Tuya cloud should work. If port 6668 is open on the switch device then it will work.
+It uses the pytuya library (https://github.com/clach04/python-tuya) to directly control Tuya protocol devices, which are designed to be controlled from the Tuya cloud. If TCP port 6668 is open on the device (switch/light), it should be controllable by this component. There is no need to manually install the python-tuya library as Home Assistant automatically installs it as a dependancy of this component.
 
 See here for how to find localKey and devId: http://seandev.org/tuyainst
 
-To use, copy tuya.py to "<home assistant config dir>/custom_components/switch" and add config below to configuration.yaml
+To use, copy the files to HASS custom component directory as below:
+   * cp switch/tuya.py <hass config dir>/custom_components/switch/
+   * cp light/tuya.py <hass config dir>/custom_components/light/
+   * Add config below to configuration.yaml:
 
-Config Example:
+```
+light:
+  - platform: tuya
+    name: //name
+    host: //ip of device
+    local_key: //localKey
+    device_id: //devId
+```
+
 ```
 switch:
   - platform: tuya
