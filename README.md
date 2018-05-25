@@ -6,17 +6,21 @@ This is a simple platform to control **SOME** switch devices that use the Tuya c
 
 It uses the pytuya library (https://github.com/clach04/python-tuya) to directly control Tuya protocol devices, which are designed to be controlled from the Tuya cloud. If TCP port 6668 is open on the device (switch/light), it should be controllable by this component. There is no need to manually install the python-tuya library as Home Assistant automatically installs it as a dependancy of this component.
 
-See here for how to find localKey and devId: http://seandev.org/tuyainst
-
 ## Finding localKey and devId
 
 localKey can be found by sniffing the communications between the switch or bulb and the Tuya HTTP servers. To do this, you will need to have access to a device through which this traffic will pass. 
 
+I have found that the "Smart Life" app which provides access to manage Tuya devices does not generate a localKey packet every time that a device is removed and re-added.
+
+### Using macOS or Android
+
+   * https://github.com/codetheweb/tuyapi/blob/master/docs/SETUP.md
+
 ### Using ngrep
 
-ngrep is the most convenient tool for this
+ngrep is the most convenient tool for this capture, if you happen to have it installed on a device which is between the smart switch/bulb and the Internet. The following command will capture relevant packets:
 
-ngrep -d any "localKey" port 80
+```ngrep -d any "localKey" port 80```
 
 ### Using tcpdump
 
@@ -78,3 +82,20 @@ switch:
         friendly_name: Switch 4
         id: 4
 ```
+
+## Compatible Devices
+
+### Bulbs
+
+   * https://www.ebay.com.au/itm/APP-WiFi-Smart-LED-Light-Bulb-Dimmable-7W-RGB-E27-B22-Lamp-For-Alexa-Google-Home/132491192747
+   * LOHAS: https://www.ebay.com.au/itm/LOHAS-WIFI-A60-Colour-LED-Smart-Bulb-Works-with-Amazon-Alexa-Colour-Changing/182832137163
+
+### Switches
+
+   * https://www.amazon.com/gp/product/B075GWQSYH/ref=oh_aui_detailpage_o01_s00
+   * Gosund Smart Plug: https://www.amazon.com/gp/product/B076VMNNRZ/ref=oh_aui_search_detailpage
+   * KMC: https://www.amazon.com/gp/product/B07313TH7B/ 
+   * Oittm Smart WiFi Wall Switch: https://www.amazon.com/Oittm-Control-Appliances-Function-Smartphone/dp/B073J5R1CT/ref=sr_1_1_sspa
+   * QIACHIP WiFi Smart Switch: https://www.aliexpress.com/store/product/QIACHIP-Wifi-Smart-Switch-2-buttons-Wireless-Smart-Home-APP-Touch-Control-Wall-Light-Switch-US/2888005_32845528129.html 
+   * VANZAVANZU: https://www.amazon.com/dp/B078PHD6S5/ref=twister_B078PGGJYV?tag=uc_102-20
+   * YTE Smart Plug: https://www.amazon.com/gp/product/B077VLLKB8/ref=oh_aui_detailpage_o02_s00
